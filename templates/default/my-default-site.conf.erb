@@ -1,0 +1,14 @@
+<VirtualHost *:80>
+    ServerName <%= @params[:server_name] %>
+    DocumentRoot "<%= @params[:docroot] %>"
+
+    <Directory <%= @params[:docroot] %>>
+        DirectoryIndex index.php
+        AllowOverride All
+        Order allow,deny
+        Allow from all
+    </Directory>
+
+    ErrorLog "/var/log/<%= @params[:name] %>.error.log"
+    CustomLog "/var/log/<%= @params[:name] %>.access.log" common
+</VirtualHost>
