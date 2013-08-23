@@ -1,20 +1,17 @@
-puts run_context.cookbook_collection[cookbook_name].root_dir + "/files/rockmongo"
 
 
-puts "Copiing rockmongo sources"
+if File.directory?(node['rockmongo']['docroot']) == false
 
-FileUtils.mkdir('/var/www/admin')
-FileUtils.cp_r(run_context.cookbook_collection[cookbook_name].root_dir + "/files/rockmongo", '/var/www/admin/rockmongo')
+	docrootPath = ""
 
+	node['rockmongo']['docroot'].split('/').each do |folder|
+		docrootPath = docrootPath + folder + "/"
 
-default_site "admin" do
-  server_name 'admin'
-  docroot "/var/www/admin"
-  enable true
-end
+		if File.directory?(docrootPath) == false
+			FileUtils.mkdir(docrootPath)
+		end
+	end
 
-default_site "rockmongo" do
-  server_name 'admin.rockmongo'
-  docroot "/var/www/admin/rockmongo"
-  enable true
+	FileUtils.cp_r(run_context.cookbook_collection[cookbook_name].root_dir + "/files/rockmongo", node['rockmongo']['docroot'])
+
 end
