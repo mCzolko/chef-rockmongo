@@ -12,6 +12,8 @@ if File.directory?(node['rockmongo']['docroot']) == false
 		end
 	end
 
-	FileUtils.cp_r(run_context.cookbook_collection[cookbook_name].root_dir + "/files/rockmongo", node['rockmongo']['docroot'])
-
+	pathToCopy = run_context.cookbook_collection[cookbook_name].root_dir + "/files/rockmongo/."
+	
+	FileUtils.cp_r(pathToCopy, node['rockmongo']['docroot'])
+	FileUtils.chown_R node['rockmongo']['user'], node['rockmongo']['group'], node['rockmongo']['docroot']
 end

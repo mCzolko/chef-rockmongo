@@ -9,6 +9,7 @@
         Allow from all
     </Directory>
 
+    LogLevel debug
     ErrorLog "/var/log/<%= @params[:name] %>.error.log"
     CustomLog "/var/log/<%= @params[:name] %>.access.log" common
 </VirtualHost>
